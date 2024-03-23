@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            position: relative;
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://source.unsplash.com/featured/?nature');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .digital-clock {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 4vw; /* Adjust based on preference for size relative to the viewport width */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Navigation and header content here -->
+    </header>
+
+    <main>
+        <!-- Main dashboard content -->
+    </main>
+
+    <footer>
+        <div id="clock" class="digital-clock">00:00:00</div>
+    </footer>
+
+    <script type="module" src="./index.js"></script>
+    <script>
+        let is24HourFormat = false;
+    
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            let ampm = hours >= 12 ? 'pm' : 'am';
+    
+            // Convert to 12-hour format if necessary
+            if (!is24HourFormat) {
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+            }
+    
+            // Format time to display as 2 digits
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+            const timeString = is24HourFormat ? hours + ':' + minutes + ':' + seconds : hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    
+            document.getElementById('clock').innerText = timeString;
+        }
+    
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Add this event listener
+        document.getElementById('clock').addEventListener('click', function() {
+            is24HourFormat = !is24HourFormat;
+            updateClock(); // Immediately update the clock when the format is changed
+        });
+    </script>
+</body>
+</html>
